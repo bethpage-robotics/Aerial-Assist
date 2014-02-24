@@ -1,20 +1,11 @@
-/*----------------------------------------------------------------------------*/
-/* Copyright (c) FIRST 2008. All Rights Reserved.                             */
-/* Open Source Software - may be modified and shared by FRC teams. The code   */
-/* must be accompanied by the FIRST BSD license file in the root directory of */
-/* the project.                                                               */
-/*----------------------------------------------------------------------------*/
-
 package team2869.bethpage.robotics.aerialassist;
-
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team2869.bethpage.robotics.aerialassist.commands.AutonomousShootBall;
 import team2869.bethpage.robotics.aerialassist.commands.CommandBase;
-import team2869.bethpage.robotics.aerialassist.commands.ExampleCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -31,45 +22,54 @@ public class AerialAssist extends IterativeRobot {
 
     /**
      * This function is run when the robot is first started up and should be
-     * used for any initialization code.
+     * used for any initialization code. The autonomous command is instantiated.
      */
     public void robotInit() {
-        SmartDashboard.putBoolean("Checkpoint A", true);
         // Initialize all subsystems
         CommandBase.init();
-        // instantiate the command used for the autonomous period
-        autonomousCommand = new ExampleCommand();
+        // Instantiate the command used for the autonomous period.
+        autonomousCommand = new AutonomousShootBall();
     }
 
     public void autonomousInit() {
-        // schedule the autonomous command (example)
+        // Schedule the autonomous command.
         autonomousCommand.start();
     }
 
     /**
-     * This function is called periodically during autonomous
+     * This function is called periodically during autonomous. This is all
+     * handled by the commands.
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
     }
-
+    
+    /**
+     * This function initializes the teleoperated mode. The default commands
+     * for each subsystem are set to run, if not already running.
+     */
     public void teleopInit() {
-	// This makes sure that the autonomous stops running when
-        // teleop starts running. If you want the autonomous to 
-        // continue until interrupted by another command, remove
-        // this line or comment it out.
-        //autonomousCommand.cancel();
+        autonomousCommand.cancel();
+        
+        if (CommandBase.driveTrain.getCurrentCommand().getName().equals("MecanumDrive")) {
+            CommandBase.driveTrain.initDefaultCommand();
+        }
+        if (CommandBase.launcher.getCurrentCommand().getName().equals("WinderLaunch")) {
+            CommandBase.launcher.initDefaultCommand();
+        }
     }
 
     /**
-     * This function is called periodically during operator control
+     * This function is called periodically during operator control. This is all
+     * handled by commands and operator interface control.
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
     }
     
     /**
-     * This function is called periodically during test mode
+     * This function is called periodically during test mode. This is not called
+     * during the official game.
      */
     public void testPeriodic() {
         LiveWindow.run();

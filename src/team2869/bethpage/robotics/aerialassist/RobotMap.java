@@ -2,15 +2,13 @@ package team2869.bethpage.robotics.aerialassist;
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
+ * to a variable name. This provides flexibility changing wiring and also makes 
+ * checking the wiring easier.
  */
 public class RobotMap {
     // Joysticks: This is the mapping of the joystick ports in the computer.
     public static final int MECANUM_STICK_PORT = 1,
                             ROTATE_STICK_PORT = 2;
-    
     
     // Motors: This is the mapping of motors ports marked PWM on the DIO board
     public static final int FRONT_LEFT_PORT = 2,
@@ -21,11 +19,12 @@ public class RobotMap {
     public static final int WIND_LEFT_PORT = 5,
                             WIND_RIGHT_PORT = 6;
     
+    public static final int RELAY_PORT = 1;
+    
     // Sensors: This is the mapping of the analog ports on the analog module
     // to the relevant sensors.
     public static final int ULTRASONIC_RANGEFINDER = 1,
-                            ENCODER_LEFT = 7,
-                            ENCODER_RIGHT = 8;
+                            LIMIT_SWITCH = 1;
     
     // Buttons: This is the mapping of the buttons on the main joystick.
     public static final int SPIN_BUTTON = 2,
@@ -37,5 +36,28 @@ public class RobotMap {
                             TURN_BACK_BUTTON = 7;
     
     public static final int INVERTED_DRIVE_BUTTON = 8;
+    
+    public static final int SHOOTBALL_BUTTON = 9;
+    
+    // Constants: This is the mapping of all required constants.
+    public static final double VOLT_DISTANCE_SLOPE = .0096560282;
+    public static final double VOLT_DISTANCE_INTERCEPT = -.0015728398;
+    
+    public static final double DISTANCE_CLICK_QUADRATIC = .5;
+    public static final double DISTANCE_CLICK_SLOPE = .5;
+    public static final double DISTANCE_CLICK_INTERCEPT = .5;
+    
+    public static final double INCHES_CM_CONVERSION = 2.54;
+    
+    public static final double AUTONOMOUS_DISTANCE = 72;
+    public static final double AUTONOMOUS_X_SPEED = 0.1;
+    public static final double AUTONOMOUS_Y_SPEED = 0.5;
+    public static final double AUTONOMOUS_WAIT_TIME = 2;
+    
+    public static final double MAX_SHOOT_DISTANCE = 192;
+    public static final double MIN_SHOOT_DISTANCE = 48;
+    
+    public static final double SHOOT_TIME = 3;
+    public static final double RESET_TIME = 0.5;
                             
 }

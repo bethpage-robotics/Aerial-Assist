@@ -1,31 +1,33 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package team2869.bethpage.robotics.aerialassist.commands;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /**
- *
- * @author Harshil
+ * Default Command that constantly runs on the driveTrain subsytem until another
+ * Command replaces it. Allows for regular mecanum drive functionality.
+ * 
+ * @author BETHPAGE HIGH SCHOOL, 2014 TEAM #2869 - HARSHIL GARG
  */
 
 public class MecanumDrive extends CommandBase {
     
+    /**
+     * Constructs a new Command.
+     */
     public MecanumDrive() {
-        // Use requires() here to declare subsystem dependencies
         requires(driveTrain);
     }
 
-    // Called just before this Command runs the first time
+    /**
+     * Sets the orientation of the wheels, accounting for wiring differences.
+     */
     protected void initialize() {
-        SmartDashboard.putBoolean("Checkpoint F", true);
         driveTrain.setOrientationLeftWheels(false);
         driveTrain.setOrientationRightWheels(true);
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Drives the robot with regular mecanum style code, while accounting for
+     * slight joystick changes. The SmartDashboard is also continually updated.
+     */
     protected void execute() {
         double cartesianX = operatorInterface.getCartesianX(),
                cartesianY = operatorInterface.getCartesianY(),
@@ -54,17 +56,18 @@ public class MecanumDrive extends CommandBase {
         driveTrain.updateDashboard(cartesianX, cartesianY, rotation);
     }
 
-    // Make this return true when this Command no longer needs to run execute()
+    /**
+     * Always returns false, since this is the default Command.
+     * 
+     * @return False
+     */
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     }
 }

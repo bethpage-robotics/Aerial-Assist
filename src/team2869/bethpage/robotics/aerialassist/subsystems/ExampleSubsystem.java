@@ -1,18 +1,17 @@
-
 package team2869.bethpage.robotics.aerialassist.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
- *
+ * This class extends Subsystem, and does not control any system on the robot.
+ * It is a placeholder subsystem to ensure that the code compiles and runs on 
+ * the robot.
+ * 
+ *@author BETHPAGE HIGH SCHOOL, 2014 TEAM #2869 - HARSHIL GARG
  */
 public class ExampleSubsystem extends Subsystem {
-    // Put methods for controlling this subsystem
-    // here. Call these from Commands.
-
+    
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
     }
 }
 

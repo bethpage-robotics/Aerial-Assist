@@ -1,40 +1,46 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package team2869.bethpage.robotics.aerialassist.commands;
 
 /**
- *
- * @author Harshil
+ * Stops the movement of the robot's driveTrain. Not necessary to instantiate
+ * this when shooting due to inbuilt stop mechanism.
+ * 
+ * @author BETHPAGE HIGH SCHOOL, 2014 TEAM #2869 - HARSHIL GARG
  */
 public class StopDrive extends CommandBase {
     
+    /**
+     * Constructs a new Command.
+     */
     public StopDrive() {
-        // Use requires() here to declare subsystem dependencies
         requires(driveTrain);
     }
 
-    // Called just before this Command runs the first time
     protected void initialize() {
     }
 
-    // Called repeatedly when this Command is scheduled to run
+    /**
+     * Controls the driveTrain by stopping it, regardless of joystick input, 
+     * while continually updating the SmartDashboard.
+     */
     protected void execute() {
         driveTrain.mecanumDrive(0, 0, 0, 0);
+        driveTrain.updateDashboard(operatorInterface.getCartesianX(), 
+            operatorInterface.getCartesianY(), operatorInterface.getRotation());
     }
-
-    // Make this return true when this Command no longer needs to run execute()
+    
+    /**
+     * If the toggle button that controls the execution of this Command is
+     * toggled off, then this Command will be terminated.
+     * 
+     * @return True if the command should terminate, and false if not.
+     */
     protected boolean isFinished() {
         return false;
     }
 
-    // Called once after isFinished returns true
     protected void end() {
     }
 
-    // Called when another command which requires one or more of the same
-    // subsystems is scheduled to run
     protected void interrupted() {
     }
 }
