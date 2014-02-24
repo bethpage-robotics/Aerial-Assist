@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package edu.wpi.first.aerialassist;
+package team2869.bethpage.robotics.aerialassist;
 
 
-import edu.wpi.first.aerialassist.commands.AutonomousDrive;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import edu.wpi.first.aerialassist.commands.CommandBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team2869.bethpage.robotics.aerialassist.commands.CommandBase;
+import team2869.bethpage.robotics.aerialassist.commands.ExampleCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -22,6 +22,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * documentation. If you change the name of this class or the package after
  * creating this project, you must also update the manifest file in the resource
  * directory.
+ * 
+ * @author BETHPAGE HIGH SCHOOL, 2014 TEAM #2869
  */
 public class AerialAssist extends IterativeRobot {
 
@@ -32,13 +34,11 @@ public class AerialAssist extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-        // instantiate the command used for the autonomous period
-        
-
+        SmartDashboard.putBoolean("Checkpoint A", true);
         // Initialize all subsystems
         CommandBase.init();
-        autonomousCommand = new AutonomousDrive(30);
-        SmartDashboard.putData(Scheduler.getInstance());
+        // instantiate the command used for the autonomous period
+        autonomousCommand = new ExampleCommand();
     }
 
     public void autonomousInit() {
@@ -58,8 +58,7 @@ public class AerialAssist extends IterativeRobot {
         // teleop starts running. If you want the autonomous to 
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        autonomousCommand.cancel();
-        this.updateDashboard();
+        //autonomousCommand.cancel();
     }
 
     /**
@@ -67,7 +66,6 @@ public class AerialAssist extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        this.updateDashboard();
     }
     
     /**
@@ -75,9 +73,5 @@ public class AerialAssist extends IterativeRobot {
      */
     public void testPeriodic() {
         LiveWindow.run();
-    }
-    
-    public void updateDashboard() {
-        CommandBase.driveTrain.updateDashboard();
     }
 }

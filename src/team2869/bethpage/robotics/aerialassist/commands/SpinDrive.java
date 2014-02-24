@@ -2,45 +2,40 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.aerialassist.commands;
+package team2869.bethpage.robotics.aerialassist.commands;
 
 /**
  *
  * @author Harshil
  */
-public class AutonomousDrive extends CommandBase {
-    private double drivepoint;
+public class SpinDrive extends CommandBase {
     
-    public AutonomousDrive(double setpoint) {
+    public SpinDrive() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
         requires(driveTrain);
-        drivepoint = setpoint;
+        this.setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-        driveTrain.setSetpoint(drivepoint);
-        driveTrain.enable();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+        driveTrain.mecanumDrive(0, 0, operatorInterface.getCartesianX(), 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return Math.abs(driveTrain.getPosition() - drivepoint) < .02;
+        return false;
     }
 
     // Called once after isFinished returns true
     protected void end() {
-        driveTrain.disable();
     }
 
     // Called when another command which requires one or more of the same
     // subsystems is scheduled to run
     protected void interrupted() {
-        driveTrain.disable();
     }
 }

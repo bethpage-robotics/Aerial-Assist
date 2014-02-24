@@ -1,6 +1,6 @@
-MIDlet-Name: Robot2014-V2
+MIDlet-Name: Robot2014-V4
 MIDlet-Version: 1.0.0
 MIDlet-Vendor: FIRST
-MIDlet-1: AerialAssist, , edu.wpi.first.aerialassist.AerialAssist
+MIDlet-1: AerialAssist, , team2869.bethpage.robotics.aerialassist.AerialAssist
 MicroEdition-Profile: IMP-1.0
 MicroEdition-Configuration: CLDC-1.1

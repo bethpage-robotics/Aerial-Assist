@@ -2,18 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.wpi.first.aerialassist.commands;
+package team2869.bethpage.robotics.aerialassist.commands;
 
 /**
  *
  * @author Harshil
  */
-public class SpinDrive extends CommandBase {
+public class HalfDrive extends CommandBase {
     
-    public SpinDrive() {
+    public HalfDrive() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
         requires(driveTrain);
+        setInterruptible(false);
     }
 
     // Called just before this Command runs the first time
@@ -22,7 +22,10 @@ public class SpinDrive extends CommandBase {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-        driveTrain.mecanumDrive(0, 0, operatorInterface.getCartesianX(), 0);
+        double x = operatorInterface.getCartesianX(),
+               y = operatorInterface.getCartesianY(),
+               r = operatorInterface.getRotation();
+        driveTrain.mecanumDrive(x/2, y/2, r/2, 0);
     }
 
     // Make this return true when this Command no longer needs to run execute()
