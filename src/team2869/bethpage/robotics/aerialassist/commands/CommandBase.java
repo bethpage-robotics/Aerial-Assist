@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import team2869.bethpage.robotics.aerialassist.OI;
 import team2869.bethpage.robotics.aerialassist.subsystems.DriveTrain;
-import team2869.bethpage.robotics.aerialassist.subsystems.ExampleSubsystem;
 import team2869.bethpage.robotics.aerialassist.subsystems.Launcher;
 
 /**
@@ -20,7 +19,6 @@ public abstract class CommandBase extends Command {
     public static OI operatorInterface;
     
     // Create a single static instance of all subsystems
-    public static ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
     public static DriveTrain driveTrain = new DriveTrain();
     public static Launcher launcher = new Launcher();
     
@@ -35,7 +33,6 @@ public abstract class CommandBase extends Command {
         // Show command the subsystem is running on the SmartDashboard
         SmartDashboard.putData(driveTrain);
         SmartDashboard.putData(launcher);
-        SmartDashboard.putData(exampleSubsystem);
     }
     
     /**

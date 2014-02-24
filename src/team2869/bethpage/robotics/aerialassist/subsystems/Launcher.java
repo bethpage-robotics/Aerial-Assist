@@ -2,7 +2,6 @@ package team2869.bethpage.robotics.aerialassist.subsystems;
 
 import com.sun.squawk.util.MathUtils;
 
-import edu.wpi.first.wpilibj.AnalogChannel;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Relay;
@@ -12,6 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import team2869.bethpage.robotics.aerialassist.RobotMap;
+import team2869.bethpage.robotics.aerialassist.Ultrasonic;
 import team2869.bethpage.robotics.aerialassist.commands.WinderLaunch;
 
 /**
@@ -27,13 +27,11 @@ public class Launcher extends Subsystem {
     
     SpeedController winderL, winderR;
     Relay releaseMotor;
-    AnalogChannel rangefinder;
+    Ultrasonic rangefinder;
     DigitalInput limitSwitch;
     Counter counter;
     
     private boolean rangeUnit = true;
-    private double rangeSlope = RobotMap.VOLT_DISTANCE_SLOPE;
-    private double rangeIntercept = RobotMap.VOLT_DISTANCE_INTERCEPT;
    
     private double windQuadratic = RobotMap.DISTANCE_CLICK_QUADRATIC;
     private double windSlope = RobotMap.DISTANCE_CLICK_SLOPE;
@@ -60,7 +58,7 @@ public class Launcher extends Subsystem {
         
         releaseMotor = new Relay(RobotMap.RELAY_PORT);
         
-        rangefinder = new AnalogChannel(RobotMap.ULTRASONIC_RANGEFINDER);
+        rangefinder = new Ultrasonic(RobotMap.ULTRASONIC_RANGEFINDER);
         
         limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
         counter = new Counter(limitSwitch);
@@ -95,10 +93,6 @@ public class Launcher extends Subsystem {
 
     public void setRangeUnit(boolean rangeUnit) {
         this.rangeUnit = rangeUnit;
-    }
-
-    public int getTargetClick() {
-        return targetClick;
     }
 
     public void setTargetClick(int targetClick) {
@@ -138,11 +132,10 @@ public class Launcher extends Subsystem {
      * rangeUnit is false.
      */
     public double calculateDistance() {
-        double distance = getVoltage()*rangeSlope + rangeIntercept;
         if (rangeUnit)
-            return distance;
+            return rangefinder.getDistance();
         else
-            return inchesToCentimeters*distance;
+            return inchesToCentimeters*rangefinder.getDistance();
     }
     
     /**
@@ -232,6 +225,9 @@ public class Launcher extends Subsystem {
             else
                 setWindMotors(0);
         }
+        else {
+            setWindMotors(0);
+        }
     }
     
     /**
@@ -277,9 +273,9 @@ public class Launcher extends Subsystem {
      * @return True if either of the winders are moving, and false if not.
      */
     private boolean winderMoving () {
-        if (winderL.get() > 0.1 && winderL.get() < -0.1)
+        if (winderL.get() > 0.1 || winderL.get() < -0.1)
             return true;
-        else if (winderR.get() > 0.1 && winderR.get() < -0.1)
+        else if (winderR.get() > 0.1 || winderR.get() < -0.1)
             return true;
         else
             return false;
