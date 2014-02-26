@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import team2869.bethpage.robotics.aerialassist.RobotMap;
-import team2869.bethpage.robotics.aerialassist.Ultrasonic;
+import team2869.bethpage.robotics.aerialassist.MaxbotixUltrasonic;
 import team2869.bethpage.robotics.aerialassist.commands.WinderLaunch;
 
 /**
@@ -31,17 +31,10 @@ public class Launcher extends Subsystem {
     DigitalInput limitSwitch;
     Counter counter;
     
-    private boolean rangeUnit = true;
-   
     private double windQuadratic = RobotMap.DISTANCE_CLICK_QUADRATIC;
     private double windSlope = RobotMap.DISTANCE_CLICK_SLOPE;
     private double windIntercept = RobotMap.DISTANCE_CLICK_INTERCEPT;
     
-    private final double inchesToCentimeters = RobotMap.INCHES_CM_CONVERSION;
-    
-    private double maxShootDistance = RobotMap.MAX_SHOOT_DISTANCE;
-    private double minShootDistance = RobotMap.MIN_SHOOT_DISTANCE;
-   
     private int currentClick = 0; 
     private int targetClick = 0;
     
@@ -87,14 +80,6 @@ public class Launcher extends Subsystem {
         return rangefinder.getVoltage();
     }
 
-    public boolean getRangeUnit() {
-        return rangeUnit;
-    }
-
-    public void setRangeUnit(boolean rangeUnit) {
-        this.rangeUnit = rangeUnit;
-    }
-
     public void setTargetClick(int targetClick) {
         this.targetClick = targetClick;
     }
@@ -132,10 +117,7 @@ public class Launcher extends Subsystem {
      * rangeUnit is false.
      */
     public double calculateDistance() {
-        if (rangeUnit)
-            return rangefinder.getDistance();
-        else
-            return inchesToCentimeters*rangefinder.getDistance();
+        return rangefinder.getDistance();
     }
     
     /**
@@ -145,13 +127,7 @@ public class Launcher extends Subsystem {
      * @return Exact decimal number of target clicks.
      */
     private double calculateExactTargetClick() {
-        double distance;
-        
-        if (rangeUnit)
-            distance = calculateDistance();
-        else
-            distance = calculateDistance()/inchesToCentimeters;
-        
+        double distance = rangefinder.getRangeInches();
         return windQuadratic*MathUtils.pow(distance, 2) + 
                windSlope*distance + windIntercept;
     }
@@ -188,19 +164,9 @@ public class Launcher extends Subsystem {
      * @return True if it is safe, and false if it is not.
      */
     private boolean isSafeToWind () {
-        double maxDistance, minDistance;
-        
-        if (rangeUnit) {
-            maxDistance = maxShootDistance;
-            minDistance = minShootDistance;
-        } else {
-            maxDistance = maxShootDistance*inchesToCentimeters;
-            minDistance = minShootDistance*inchesToCentimeters;
-        }
-        
-        if (calculateDistance() > maxDistance)
+        if (getRangeInches() > rangefinder.maxShootDistance)
             return false;
-        if (calculateDistance() < minDistance)
+        if (getRangeInches() < rangefinder.minShootDistance)
             return false;
         if (releaseMotor.get() == Relay.Value.kOn) 
             return false;
@@ -240,16 +206,9 @@ public class Launcher extends Subsystem {
      * (target range achieved) and a negative value to indicate backward drive.
      */
     public int autonomousDrive(double autoDistance) {
-        double autonomousDistance;
-        
-        if (rangeUnit)
-            autonomousDistance = autoDistance;
-        else
-            autonomousDistance = autoDistance*inchesToCentimeters;
-        
-        if (calculateDistance() - autonomousDistance > 3)
+        if (rangefinder.getRangeInches() - autoDistance > 3)
             return 1;
-        else if (calculateDistance() - autonomousDistance < -3)
+        else if (rangefinder.getRangeInches() - autoDistance < -3)
             return -1;
         else 
             return 0;
