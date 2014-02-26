@@ -18,11 +18,11 @@ public class MaxbotixUltrasonic extends AnalogChannel {
         
         public final int value;
         static final int kInches_val = 0;
-        static final int kMillimeters_val = 1;
+        static final int kCentimeters_val = 1;
 
         public static final Unit kInches = new Unit(kInches_val);
 
-        public static final Unit kMillimeter = new Unit(kMillimeters_val);
+        public static final Unit kCentimeter = new Unit(kCentimeters_val);
         
         /**
          * Constructs the Unit for this Ultrasonic rangefinder.
@@ -35,6 +35,10 @@ public class MaxbotixUltrasonic extends AnalogChannel {
     }
     private double distanceSlope = RobotMap.VOLT_DISTANCE_SLOPE;
     private double distanceIntercept = RobotMap.VOLT_DISTANCE_INTERCEPT;
+    
+    public double maxShootDistance = RobotMap.MAX_SHOOT_DISTANCE;
+    public double minShootDistance = RobotMap.MIN_SHOOT_DISTANCE;
+    
     private Unit unit = Unit.kInches;
 
     /**
@@ -78,7 +82,7 @@ public class MaxbotixUltrasonic extends AnalogChannel {
         switch (unit.value) {
             case Unit.kInches_val:
                 return getRangeInches();
-            case Unit.kMillimeters_val:
+            case Unit.kCentimeters_val:
                 return getRangeCentimeters();
             default:
                 return 0.0;

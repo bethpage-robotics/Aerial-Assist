@@ -27,7 +27,7 @@ public class Launcher extends Subsystem {
     
     SpeedController winderL, winderR;
     Relay releaseMotor;
-    Ultrasonic rangefinder;
+    MaxbotixUltrasonic rangefinder;
     DigitalInput limitSwitch;
     Counter counter;
     
@@ -41,7 +41,7 @@ public class Launcher extends Subsystem {
     /**
      * Constructs a new Launcher, with two Talons for winding, a release
      * relay, and a limit switch for winding regulation based on input from
-     * a Maxbotix Ultrasonic rangefinder.
+     * a MaxbotixUltrasonic rangefinder.
      */
     public Launcher () {
         super("Launcher");
@@ -51,7 +51,7 @@ public class Launcher extends Subsystem {
         
         releaseMotor = new Relay(RobotMap.RELAY_PORT);
         
-        rangefinder = new Ultrasonic(RobotMap.ULTRASONIC_RANGEFINDER);
+        rangefinder = new MaxbotixUltrasonic(RobotMap.ULTRASONIC_RANGEFINDER);
         
         limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
         counter = new Counter(limitSwitch);
@@ -98,7 +98,7 @@ public class Launcher extends Subsystem {
     }
     
     /**
-     * Resets everyhting for the next shoot.
+     * Resets everything for the next shoot.
      */
     public void resetShoot() {
         setWindMotors(0);
@@ -164,9 +164,9 @@ public class Launcher extends Subsystem {
      * @return True if it is safe, and false if it is not.
      */
     private boolean isSafeToWind () {
-        if (getRangeInches() > rangefinder.maxShootDistance)
+        if (rangefinder.getRangeInches() > rangefinder.maxShootDistance)
             return false;
-        if (getRangeInches() < rangefinder.minShootDistance)
+        if (rangefinder.getRangeInches() < rangefinder.minShootDistance)
             return false;
         if (releaseMotor.get() == Relay.Value.kOn) 
             return false;
