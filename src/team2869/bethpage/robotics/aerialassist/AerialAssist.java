@@ -51,10 +51,10 @@ public class AerialAssist extends IterativeRobot {
     public void teleopInit() {
         autonomousCommand.cancel();
         
-        if (CommandBase.driveTrain.getCurrentCommand().getName().equals("MecanumDrive")) {
+        if (!CommandBase.driveTrain.getCurrentCommand().getName().equals("MecanumDrive")) {
             CommandBase.driveTrain.initDefaultCommand();
         }
-        if (CommandBase.launcher.getCurrentCommand().getName().equals("WinderLaunch")) {
+        if (!CommandBase.launcher.getCurrentCommand().getName().equals("WinderLaunch")) {
             CommandBase.launcher.initDefaultCommand();
         }
     }
