@@ -319,6 +319,7 @@ public class Launcher extends Subsystem {
         
         SmartDashboard.putNumber("Rangefinder voltage", getVoltage());
         SmartDashboard.putNumber("Rangefinder distance", calculateDistance());
+        SmartDashboard.putBoolean("Range of shot", isSafeToWind());
         
         SmartDashboard.putNumber("Current clicks", getCurrentClick());
         SmartDashboard.putNumber("Exact target clicks", calculateExactTargetClick());
