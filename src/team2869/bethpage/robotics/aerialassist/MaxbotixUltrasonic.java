@@ -36,9 +36,6 @@ public class MaxbotixUltrasonic extends AnalogChannel {
     private double distanceSlope = RobotMap.VOLT_DISTANCE_SLOPE;
     private double distanceIntercept = RobotMap.VOLT_DISTANCE_INTERCEPT;
     
-    public double maxShootDistance = RobotMap.MAX_SHOOT_DISTANCE;
-    public double minShootDistance = RobotMap.MIN_SHOOT_DISTANCE;
-    
     private Unit unit = Unit.kInches;
 
     /**

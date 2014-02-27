@@ -35,6 +35,9 @@ public class Launcher extends Subsystem {
     private double windSlope = RobotMap.DISTANCE_CLICK_SLOPE;
     private double windIntercept = RobotMap.DISTANCE_CLICK_INTERCEPT;
     
+    private double maxShootDistance = RobotMap.MAX_SHOOT_DISTANCE;
+    private double minShootDistance = RobotMap.MIN_SHOOT_DISTANCE;
+    
     private int currentClick = 0; 
     private int targetClick = 0;
     
@@ -94,7 +97,7 @@ public class Launcher extends Subsystem {
      */
     public void shoot() {
         setWindMotors(0);
-        releaseMotor.set(Relay.Value.kOn);
+        releaseMotor.set(Relay.Value.kForward);
     }
     
     /**
@@ -102,7 +105,7 @@ public class Launcher extends Subsystem {
      */
     public void resetShoot() {
         setWindMotors(0);
-        releaseMotor.set(Relay.Value.kOff);
+        releaseMotor.set(Relay.Value.kReverse);
         counter.reset();
         
         currentClick = 0;
@@ -164,9 +167,9 @@ public class Launcher extends Subsystem {
      * @return True if it is safe, and false if it is not.
      */
     private boolean isSafeToWind () {
-        if (rangefinder.getRangeInches() > rangefinder.maxShootDistance)
+        if (rangefinder.getRangeInches() > maxShootDistance)
             return false;
-        if (rangefinder.getRangeInches() < rangefinder.minShootDistance)
+        if (rangefinder.getRangeInches() < minShootDistance)
             return false;
         if (releaseMotor.get() == Relay.Value.kOn) 
             return false;
