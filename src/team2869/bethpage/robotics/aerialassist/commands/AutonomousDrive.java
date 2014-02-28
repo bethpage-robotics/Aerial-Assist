@@ -72,7 +72,7 @@ public class AutonomousDrive extends CommandBase {
             else
                 driveTrain.mecanumDrive(0, 0, 0, 0);
         }
-        launcher.windLaunchSystem();
+        launcher.constantWind();
     }
 
     /**

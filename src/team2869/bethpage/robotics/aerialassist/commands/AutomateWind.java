@@ -1,14 +1,14 @@
 package team2869.bethpage.robotics.aerialassist.commands;
 
 /**
- * Default Command that constantly runs on the launcher subsystem until another
- * Command replaces it. Allows for constant winding functionality.
+ * Command that constantly runs on the launcher subsystem until anothe Command 
+ * replaces it. Allows for constant winding functionality.
  * 
  * @author BETHPAGE HIGH SCHOOL, 2014 TEAM #2869 - HARSHIL GARG
  */
-public class WinderLaunch extends CommandBase {
+public class AutomateWind extends CommandBase {
     
-    public WinderLaunch() {
+    public AutomateWind() {
         requires(launcher);
     }
 
@@ -19,14 +19,14 @@ public class WinderLaunch extends CommandBase {
      * Winds the launcher while continually updating the SmartDashboard.
      */
     protected void execute() {
-        launcher.windLaunchSystem();
+        launcher.constantWind();
         launcher.updateDashboard();
     }
 
     /**
      * Always returns false, since this is the default Command.
      * 
-     * @return False
+     * @return false
      */
     protected boolean isFinished() {
         return false;

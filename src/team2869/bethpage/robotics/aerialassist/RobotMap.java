@@ -37,7 +37,10 @@ public class RobotMap {
     
     public static final int INVERTED_DRIVE_BUTTON = 8;
     
-    public static final int SHOOTBALL_BUTTON = 9;
+    public static final int AUTOMATEWIND_BUTTON = 9;
+    public static final int STARTWIND_BUTTON = 10;
+    public static final int OPERATORWIND_BUTTON = 11;
+    public static final int SHOOTBALL_BUTTON = 12;
     
     // Constants: This is the mapping of all required constants.
     public static final double VOLT_DISTANCE_SLOPE = .0096560282;
@@ -57,7 +60,13 @@ public class RobotMap {
     public static final double MAX_SHOOT_DISTANCE = 192;
     public static final double MIN_SHOOT_DISTANCE = 48;
     
+    public static final int MAX_CLICKS = 12;
+    public static final double [] MAX_CLICK_INTERVAL = {0.5,0.6,0.7,0.8,0.9,1};
+    
     public static final double SHOOT_TIME = 3;
     public static final double RESET_TIME = 0.5;
+    
+    public static final double STARTWIND_TIMEOUT_TIME = 5;
+    public static final double OPERATORWIND_TIMEOUT_TIME = 5;
                             
 }

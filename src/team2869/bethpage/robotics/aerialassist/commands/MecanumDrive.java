@@ -59,7 +59,7 @@ public class MecanumDrive extends CommandBase {
     /**
      * Always returns false, since this is the default Command.
      * 
-     * @return False
+     * @return false
      */
     protected boolean isFinished() {
         return false;

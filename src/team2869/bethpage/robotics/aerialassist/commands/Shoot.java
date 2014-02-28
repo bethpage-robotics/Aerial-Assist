@@ -48,8 +48,8 @@ public class Shoot extends CommandBase {
             launcher.shoot();
         }
         else {
-            launcher.windLaunchSystem();
-            new WinderLaunch().start();
+            launcher.constantWind();
+            new AutomateWind().start();
         }
         launcher.updateDashboard();
     }

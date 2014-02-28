@@ -29,7 +29,6 @@ public class DriveToExactClick extends CommandBase {
      */
     protected void execute() {
         driveTrain.mecanumDrive(0, 0.25, 0, 0);
-        launcher.windLaunchSystem();
         launcher.updateDashboard();
     }
 

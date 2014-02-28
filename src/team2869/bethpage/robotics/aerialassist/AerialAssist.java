@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import team2869.bethpage.robotics.aerialassist.commands.AutonomousShootBall;
 import team2869.bethpage.robotics.aerialassist.commands.CommandBase;
 
@@ -25,6 +26,7 @@ public class AerialAssist extends IterativeRobot {
      * used for any initialization code. The autonomous command is instantiated.
      */
     public void robotInit() {
+        SmartDashboard.putNumber("Operator Clicks", 0);
         // Initialize all subsystems
         CommandBase.init();
         // Instantiate the command used for the autonomous period.
