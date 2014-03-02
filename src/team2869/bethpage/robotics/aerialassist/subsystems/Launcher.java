@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import team2869.bethpage.robotics.aerialassist.AxisCameraM1101;
 
 import team2869.bethpage.robotics.aerialassist.RobotMap;
 import team2869.bethpage.robotics.aerialassist.MaxbotixUltrasonic;
@@ -28,9 +29,12 @@ public class Launcher extends Subsystem {
 
     SpeedController winderL, winderR;
     Relay releaseMotor;
+    AxisCameraM1101 camera;
     MaxbotixUltrasonic rangefinder;
     DigitalInput limitSwitch;
     Counter counter;
+    
+    private boolean cameraInput = false;
     
     private double windQuadratic = RobotMap.DISTANCE_CLICK_QUADRATIC;
     private double windSlope = RobotMap.DISTANCE_CLICK_SLOPE;
@@ -58,7 +62,8 @@ public class Launcher extends Subsystem {
         winderR = new Talon(RobotMap.WIND_RIGHT_PORT);
 
         releaseMotor = new Relay(RobotMap.RELAY_PORT);
-
+        
+        camera = new AxisCameraM1101();
         rangefinder = new MaxbotixUltrasonic(RobotMap.ULTRASONIC_RANGEFINDER);
 
         limitSwitch = new DigitalInput(RobotMap.LIMIT_SWITCH);
@@ -133,7 +138,10 @@ public class Launcher extends Subsystem {
      * rangeUnit is false.
      */
     public double calculateDistance() {
-        return rangefinder.getDistance();
+        if (cameraInput)
+            return camera.getDistance();
+        else
+            return rangefinder.getDistance();
     }
 
     /**
@@ -143,7 +151,13 @@ public class Launcher extends Subsystem {
      * @return Exact decimal number of target clicks.
      */
     private double calculateExactTargetClick() {
-        double distance = rangefinder.getRangeInches();
+        double distance;
+        
+        if (cameraInput)
+            distance = camera.getDistance();
+        else
+            distance = rangefinder.getRangeInches();
+        
         return windQuadratic * MathUtils.pow(distance, 2)
                 + windSlope * distance + windIntercept;
     }
@@ -182,10 +196,17 @@ public class Launcher extends Subsystem {
      * @return True if it is safe, and false if it is not.
      */
     private boolean isSafeToWind() {
-        if (rangefinder.getRangeInches() > maxShootDistance) {
+        double distanceToGoal;
+        
+        if (cameraInput)
+            distanceToGoal = camera.getDistance();
+        else
+            distanceToGoal = rangefinder.getRangeInches();
+            
+        if (distanceToGoal > maxShootDistance) {
             return false;
         }
-        if (rangefinder.getRangeInches() < minShootDistance) {
+        if (distanceToGoal < minShootDistance) {
             return false;
         }
 
@@ -267,9 +288,15 @@ public class Launcher extends Subsystem {
      * (target range achieved) and a negative value to indicate backward drive.
      */
     public int autonomousDrive(double autoDistance) {
-        if (rangefinder.getRangeInches() - autoDistance > 3) {
+        double distanceToGoal;
+        if (cameraInput)
+            distanceToGoal = camera.getDistance();
+        else
+            distanceToGoal = rangefinder.getRangeInches();
+        
+        if (distanceToGoal - autoDistance > 3) {
             return 1;
-        } else if (rangefinder.getRangeInches() - autoDistance < -3) {
+        } else if (distanceToGoal - autoDistance < -3) {
             return -1;
         } else {
             return 0;

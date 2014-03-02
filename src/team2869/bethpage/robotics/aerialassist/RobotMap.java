@@ -68,5 +68,17 @@ public class RobotMap {
     
     public static final double STARTWIND_TIMEOUT_TIME = 5;
     public static final double OPERATORWIND_TIMEOUT_TIME = 5;
+    
+    // Image constants: All constants used in image processing.
+    
+    public static final int Y_IMAGE_RES = 480;
+    public static final double VIEW_ANGLE = 49;
+    public static final int RECTANGULARITY_LIMIT = 40;
+    public static final int ASPECT_RATIO_LIMIT = 55;
+    public static final int TAPE_WIDTH_LIMIT = 40;
+    public static final int VERTICAL_SCORE_LIMIT = 50;
+    public static final int LR_SCORE_LIMIT = 50;
+    public static final int AREA_MINIMUM = 150;
+    public static final int MAX_PARTICLES = 8;
                             
 }

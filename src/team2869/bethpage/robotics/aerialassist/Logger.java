@@ -1,4 +1,4 @@
-package team2869.bethpage.robotics.util;
+package team2869.bethpage.robotics.aerialassist;
 
 import com.sun.squawk.microedition.io.FileConnection;
 import java.io.DataOutputStream;
