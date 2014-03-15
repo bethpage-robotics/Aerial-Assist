@@ -81,4 +81,45 @@ public class RobotMap {
     public static final int AREA_MINIMUM = 150;
     public static final int MAX_PARTICLES = 8;
                             
+    private static String DIVIDER="\n--------------------------\n\n";
+
+    /**
+     * Produces a String representation of all the constants associated with the drive train.
+     * TODO: Move Drive train constants to this class instead of the constructor calls for PCJ.
+     * @return A String formatted with one value per line, in the format:<pre>
+     * x=5
+     * y=10
+     * q=32.4
+     * </pre>
+     */
+    public static String printDriveValues() {
+       //StringBuffer sb = new StringBuffer(1024);
+       return "No Drive train constants are here. They are all stored in the PowerControlJaguar objects.";
+    }
+    
+    public static String printAutonomous() {
+       StringBuffer sb = new StringBuffer(1024);
+       sb.append("AUTONOMOUS_DISTANCE = ").append(AUTONOMOUS_DISTANCE).append("\n");
+       sb.append("AUTONOMOUS_X_SPEED = ").append(AUTONOMOUS_X_SPEED).append("\n");
+       sb.append("AUTONOMOUS_Y_SPEED = ").append(AUTONOMOUS_Y_SPEED).append("\n");
+       sb.append("AUTONOMOUS_WAIT_TIME = ").append(AUTONOMOUS_WAIT_TIME).append("\n");
+       return sb.toString();       
+    }
+    
+    public static String printShooter() {
+       StringBuffer sb = new StringBuffer(1024);
+       sb.append("MAX_SHOOT_DISTANCE = ").append(MAX_SHOOT_DISTANCE).append("\n");
+       sb.append("MIN_SHOOT_DISTANCE = ").append(MIN_SHOOT_DISTANCE).append("\n");
+       sb.append("MAX_CLICKS = ").append(MAX_CLICKS).append("\n");
+       //should we print double [] MAX_CLICK_INTERVAL ?
+       sb.append("SHOOT_TIME = ").append(SHOOT_TIME).append("\n");
+       sb.append("RESET_TIME = ").append(RESET_TIME).append("\n");
+       sb.append("STARTWIND_TIMEOUT_TIME = ").append(STARTWIND_TIMEOUT_TIME).append("\n");
+       sb.append("OPERATORWIND_TIMEOUT_TIME = ").append(OPERATORWIND_TIMEOUT_TIME).append("\n");
+       return sb.toString();
+    }
+    
+    public static String printAll() {
+       return DIVIDER + printDriveValues() + printShooter() + DIVIDER;
+    }
 }
